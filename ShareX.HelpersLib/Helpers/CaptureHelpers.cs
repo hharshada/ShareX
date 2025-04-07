@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2024 ShareX Team
+    Copyright (c) 2007-2025 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ namespace ShareX.HelpersLib
 {
     public static class CaptureHelpers
     {
-        public static Rectangle GetScreenBounds2()
+        public static Rectangle GetScreenBounds()
         {
             return SystemInformation.VirtualScreen;
         }
@@ -42,7 +42,7 @@ namespace ShareX.HelpersLib
             return Screen.AllScreens.Select(x => x.WorkingArea).Combine();
         }
 
-        public static Rectangle GetScreenBounds()
+        private static Rectangle GetScreenBounds2()
         {
             Point topLeft = Point.Empty;
             Point bottomRight = Point.Empty;
@@ -54,14 +54,31 @@ namespace ShareX.HelpersLib
                 if ((screen.Bounds.X + screen.Bounds.Width) > bottomRight.X) bottomRight.X = screen.Bounds.X + screen.Bounds.Width;
                 if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
             }
-            return new Rectangle(topLeft.X, bottomRight.X + Math.Abs(topLeft.X), topLeft.Y, bottomRight.Y + Math.Abs(topLeft.Y));
+
+            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+        }
+
+        private static Rectangle GetScreenBounds3()
+        {
+            Point topLeft = Point.Empty;
+            Point bottomRight = Point.Empty;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                topLeft.X = Math.Min(topLeft.X, screen.Bounds.X);
+                topLeft.Y = Math.Min(topLeft.Y, screen.Bounds.Y);
+                bottomRight.X = Math.Max(bottomRight.X, screen.Bounds.Right);
+                bottomRight.Y = Math.Max(bottomRight.Y, screen.Bounds.Bottom);
+            }
+
+            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
 
         private static Rectangle GetScreenBounds4()
         {
             return Screen.AllScreens.Select(x => x.Bounds).Combine();
         }
-        
+
         public static Rectangle GetActiveScreenBounds()
         {
             return Screen.FromPoint(GetCursorPosition()).Bounds;
@@ -81,8 +98,7 @@ namespace ShareX.HelpersLib
         {
             int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
             int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
-            return new Point(screenX - p.X, p.Y - screenY);
-            //return new Point(p.X - screenX, p.Y - screenY);
+            return new Point(p.X - screenX, p.Y - screenY);
         }
 
         public static Rectangle ScreenToClient(Rectangle r)
@@ -362,6 +378,5 @@ namespace ShareX.HelpersLib
             rect.Height -= rect.Height & 1;
             return rect;
         }
-
     }
 }

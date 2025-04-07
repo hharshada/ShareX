@@ -61,7 +61,6 @@ namespace ShareX
             }
         }
 
-        //demo : IEnumerable Editable expression 
         public static List<QuickTaskInfo> DefaultPresets => new List<QuickTaskInfo>()
         {
             new QuickTaskInfo("Save, Upload, Copy URL", AfterCaptureTasks.SaveImageToFile | AfterCaptureTasks.UploadImageToHost, AfterUploadTasks.CopyURLToClipboard),

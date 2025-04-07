@@ -4,9 +4,6 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="9.0.3" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
   <ItemGroup>
