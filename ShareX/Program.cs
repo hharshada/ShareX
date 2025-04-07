@@ -448,13 +448,14 @@ namespace ShareX
             await CLI.UseCommandLineArgs(cli.Commands);
         }
 
+        //demo : Conditional Breakpoint with Copilot
         private static void UpdatePersonalPath()
         {
             Sandbox = CLI.IsCommandExist("sandbox");
 
             if (!Sandbox)
             {
-                if (CLI.IsCommandExist("portable", "p"))
+                if (!CLI.IsCommandExist("portable", "p"))
                 {
                     Portable = true;
                     CustomPersonalPath = PortablePersonalFolder;
