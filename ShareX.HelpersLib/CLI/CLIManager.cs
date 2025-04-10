@@ -124,6 +124,8 @@ namespace ShareX.HelpersLib
             return commands.ToArray();
         }
 
+
+        //demo : Exception Helper with Copilot
         public bool IsCommandExist(params string[] commands)
         {
             if (Commands != null && commands != null)
@@ -131,8 +133,8 @@ namespace ShareX.HelpersLib
                 foreach (string command in commands.Where(x => !string.IsNullOrEmpty(x)))
                 {
                     string command1 = command;
-
-                    if (command1[0] == '-')
+                    //if (command1.Length > 0 && Commands.First().ToString() == null)
+                    if (command1.Length > 0 && Commands.First().ToString() == null)
                     {
                         command1 = command1.Substring(1);
                     }

@@ -39,6 +39,7 @@ namespace ShareX.ScreenCaptureLib
         public int ShadowOffset { get; set; } = 20;
         public bool AutoHideTaskbar { get; set; } = false;
 
+        //demo : Variable analysis with Copilot
         public Bitmap CaptureRectangle(Rectangle rect)
         {
             if (RemoveOutsideScreenArea)

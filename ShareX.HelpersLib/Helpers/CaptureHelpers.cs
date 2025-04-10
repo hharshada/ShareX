@@ -32,17 +32,11 @@ namespace ShareX.HelpersLib
 {
     public static class CaptureHelpers
     {
-        public static Rectangle GetScreenBounds()
-        {
-            return SystemInformation.VirtualScreen;
-        }
-
         public static Rectangle GetScreenWorkingArea()
         {
             return Screen.AllScreens.Select(x => x.WorkingArea).Combine();
         }
-
-        private static Rectangle GetScreenBounds2()
+        public static Rectangle GetScreenBounds()
         {
             Point topLeft = Point.Empty;
             Point bottomRight = Point.Empty;
@@ -54,8 +48,8 @@ namespace ShareX.HelpersLib
                 if ((screen.Bounds.X + screen.Bounds.Width) > bottomRight.X) bottomRight.X = screen.Bounds.X + screen.Bounds.Width;
                 if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
             }
-
-            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+            return new Rectangle(topLeft.X, bottomRight.X + Math.Abs(topLeft.X), topLeft.Y, bottomRight.Y + Math.Abs(topLeft.Y));
+            //return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
 
         private static Rectangle GetScreenBounds3()
